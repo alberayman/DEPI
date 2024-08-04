@@ -1,0 +1,4 @@
+To list the partitions in terminal 
+- lsblk 
+then to map the partition so you can access it.
+- sudo mount /dev/sda2 /media/devops or the location you want it to be mounted in.
