@@ -45,10 +45,15 @@ delete_database() {
 }
 
 
-
-
-
-
+# Function to list all databases
+list_databases() {
+    echo "Databases in the current directory:"
+    for dir in */; do
+        if [ -d "$dir" ]; then
+            echo "${dir%/}"
+        fi
+    done
+}
 
 
 
