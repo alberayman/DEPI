@@ -1,0 +1,35 @@
+Task1:
+	mkdir ~/nginx-custom
+	cd ~/nginx-custom
+
+	echo "<h1>Custom Nginx Server</h1>" > index.html
+
+
+	cat > default.conf <<EOF
+server {
+    listen 8080;
+    server_name localhost;
+
+    location / {
+        root /usr/share/nginx/html;
+        index index.html;
+    }
+}
+EOF
+
+
+cat > Dockerfile <<EOF
+FROM nginx
+COPY index.html /usr/share/nginx/html/index.html
+COPY default.conf /etc/nginx/conf.d/default.conf
+EOF
+
+
+Task2:
+
+	docker build -t custom-nginx .
+	docker run -d -p 8080:8080 --name custom-nginx-container custom-nginx
+
+
+
+
