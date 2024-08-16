@@ -1,6 +1,24 @@
 #!/bin/bash
 
+# Default state
+CONNECTED=false
+DB_DIR=""
 
+# Function to create a database
+create_database() {
+    read -p "Enter the database name: " db_name
+    if [ -z "$db_name" ]; then
+        echo "Database name cannot be empty."
+        return 1
+    fi
+
+    if [ ! -d "$db_name" ]; then
+        mkdir "$db_name"
+        echo "Database '$db_name' created."
+    else
+        echo "Database '$db_name' already exists."
+    fi
+}
 
 # Main script logic
 while true; do
