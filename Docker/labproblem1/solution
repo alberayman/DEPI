@@ -1,0 +1,4 @@
+mkdir -p ~/nginx-vol1 ~/nginx-vol2
+echo "<h1>Hello from Nginx</h1>" > ~/nginx-vol1/index.html
+docker run -d --name my-nginx -v ~/nginx-vol1:/usr/share/nginx/html:ro -v ~/nginx-vol2:/etc/nginx/conf.d nginx
+
