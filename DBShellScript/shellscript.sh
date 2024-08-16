@@ -20,6 +20,38 @@ create_database() {
     fi
 }
 
+
+
+# Function to delete a database
+delete_database() {
+    read -p "Enter the database name to delete: " db_name
+    if [ -z "$db_name" ]; then
+        echo "Database name cannot be empty."
+        return 1
+    fi
+
+    if [ -d "$db_name" ]; then
+        echo "Are you sure you want to delete the database '$db_name'? (y/n)"
+        read confirmation
+        if [ "$confirmation" = "y" ] || [ "$confirmation" = "Y" ]; then
+            rm -rf "$db_name"
+            echo "Database '$db_name' deleted."
+        else
+            echo "Database deletion cancelled."
+        fi
+    else
+        echo "Database '$db_name' does not exist."
+    fi
+}
+
+
+
+
+
+
+
+
+
 # Main script logic
 while true; do
     if [ "$CONNECTED" = true ]; then
