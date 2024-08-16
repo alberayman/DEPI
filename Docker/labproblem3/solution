@@ -1,0 +1,66 @@
+Task1:
+	npm install -g npx
+
+	npx create-react-app my-react-app
+	cd my-react-app
+	npm start
+
+Task2:
+cat > Dockerfile <<EOF
+# Use an official Node.js runtime as a parent image
+FROM node:14
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the package.json and package-lock.json files
+COPY package*.json ./
+
+# Install any needed dependencies
+RUN npm install
+
+# Copy the rest of the app's source code
+COPY . .
+
+# Build the app for production
+RUN npm run build
+
+# Use an Nginx server to serve the built files
+FROM nginx:alpine
+COPY --from=0 /app/build /usr/share/nginx/html
+
+# Expose port 80
+EXPOSE 80
+
+# Start Nginx server
+CMD ["nginx", "-g", "daemon off;"]
+EOF
+	
+
+Task3:
+	docker build -t my-react-app .
+	docker run -d -p 80:80 my-react-app
+
+
+
+Task4:
+	cat > Dockerfile <<EOF
+# First stage: build the React app
+FROM node:14 as builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
+
+# Second stage: serve the app with Nginx
+FROM nginx:alpine
+COPY --from=builder /app/build /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+EOF
+
+
+	docker build -t my-react-app .
+	docker run -d -p 80:80 my-react-app
+
