@@ -1,4 +1,16 @@
-mkdir -p ~/nginx-vol1 ~/nginx-vol2
-echo "<h1>Hello from Nginx</h1>" > ~/nginx-vol1/index.html
-docker run -d --name my-nginx -v ~/nginx-vol1:/usr/share/nginx/html:ro -v ~/nginx-vol2:/etc/nginx/conf.d nginx
+Task1:
+        mkdir -p ~/nginx-vol1 ~/nginx-vol2
+	echo "<h1>Hello from Nginx</h1>" > ~/nginx-vol1/index.html
+	docker run -d --name my-nginx -v ~/nginx-vol1:/usr/share/nginx/html:ro -v ~/nginx-vol2:/etc/nginx/conf.d nginx
+Task2:
+	echo "<h1>Welcome to My Nginx Server!</h1>" > ~/nginx-vol1/index.html
+	
+Task3:
+	docker stop my-nginx
+	docker rm my-nginx
+Task4:
+	docker run -d --name nginx-vol-mount -v ~/nginx-vol1:/usr/share/nginx/html:ro -v ~/nginx-vol2:/etc/nginx/conf.d -p 8080:80 nginx
+	docker run -d --name nginx-bind-mount -v $(pwd)/nginx-vol1:/usr/share/nginx/html:ro -v $(pwd)/nginx-vol2:/etc/nginx/conf.d -p 8081:80 nginx
+
+	
 
