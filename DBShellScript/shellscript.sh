@@ -101,6 +101,17 @@ delete_table() {
     fi
 }
 
+# Function to list tables in the current database
+list_tables() {
+    if [ "$CONNECTED" = false ]; then
+        echo "No database connected. Connect to a database first."
+        return 1
+    fi
+
+    echo "Tables in database '$DB_DIR':"
+    ls "$DB_DIR"
+}
+
 # Main script logic
 while true; do
     if [ "$CONNECTED" = true ]; then
