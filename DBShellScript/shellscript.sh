@@ -138,6 +138,30 @@ add_row() {
     fi
 }
 
+# Function to list rows in a table
+list_rows() {
+    if [ "$CONNECTED" = false ]; then
+        echo "No database connected. Connect to a database first."
+        return 1
+    fi
+
+    read -p "Enter the table name to list rows from: " table_name
+    if [ -z "$table_name" ]; then
+        echo "Table name cannot be empty."
+        return 1
+    fi
+
+    table_file="$DB_DIR/$table_name"
+
+    if [ -f "$table_file" ]; then
+        echo "Rows in table '$table_name':"
+        cat "$table_file"
+    else
+        echo "Table '$table_name' does not exist."
+    fi
+}
+
+
 # Main script logic
 while true; do
     if [ "$CONNECTED" = true ]; then
