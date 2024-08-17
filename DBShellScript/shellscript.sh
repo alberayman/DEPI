@@ -78,7 +78,28 @@ create_table() {
     fi
 }
 
+# Function to delete a table
+delete_table() {
+    if [ "$CONNECTED" = false ]; then
+        echo "No database connected. Connect to a database first."
+        return 1
+    fi
 
+    read -p "Enter the table name to delete: " table_name
+    if [ -z "$table_name" ]; then
+        echo "Table name cannot be empty."
+        return 1
+    fi
+
+    table_file="$DB_DIR/$table_name"
+
+    if [ -f "$table_file" ]; then
+        rm "$table_file"
+        echo "Table '$table_name' deleted."
+    else
+        echo "Table '$table_name' does not exist."
+    fi
+}
 
 # Main script logic
 while true; do
