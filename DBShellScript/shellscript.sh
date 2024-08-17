@@ -55,6 +55,29 @@ list_databases() {
     done
 }
 
+# Function to create a table
+create_table() {
+    if [ "$CONNECTED" = false ]; then
+        echo "No database connected. Connect to a database first."
+        return 1
+    fi
+
+    read -p "Enter the table name: " table_name
+    if [ -z "$table_name" ]; then
+        echo "Table name cannot be empty."
+        return 1
+    fi
+
+    table_file="$DB_DIR/$table_name"
+
+    if [ ! -f "$table_file" ]; then
+        touch "$table_file"
+        echo "Table '$table_name' created."
+    else
+        echo "Table '$table_name' already exists."
+    fi
+}
+
 
 
 # Main script logic
