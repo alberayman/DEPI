@@ -110,6 +110,32 @@ list_tables() {
 
     echo "Tables in database '$DB_DIR':"
     ls "$DB_DIR"
+
+}
+
+
+# Function to add a row to a table
+add_row() {
+    if [ "$CONNECTED" = false ]; then
+        echo "No database connected. Connect to a database first."
+        return 1
+    fi
+
+    read -p "Enter the table name to add a row to: " table_name
+    if [ -z "$table_name" ]; then
+        echo "Table name cannot be empty."
+        return 1
+    fi
+
+    table_file="$DB_DIR/$table_name"
+
+    if [ -f "$table_file" ]; then
+        read -p "Enter the data to add (comma-separated values): " data
+        echo "$data" >> "$table_file"
+        echo "Row added to table '$table_name'."
+    else
+        echo "Table '$table_name' does not exist."
+    fi
 }
 
 # Main script logic
