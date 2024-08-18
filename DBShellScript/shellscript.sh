@@ -162,6 +162,32 @@ list_rows() {
 }
 
 
+# Function to delete a row from a table
+delete_row() {
+    if [ "$CONNECTED" = false ]; then
+        echo "No database connected. Connect to a database first."
+        return 1
+    fi
+
+    read -p "Enter the table name to delete a row from: " table_name
+    if [ -z "$table_name" ]; then
+        echo "Table name cannot be empty."
+        return 1
+    fi
+
+    table_file="$DB_DIR/$table_name"
+
+    if [ -f "$table_file" ]; then
+        echo "Current rows in table '$table_name':"
+        cat "$table_file"
+        read -p "Enter the row to delete: " row_to_delete
+        grep -v "^$row_to_delete$" "$table_file" > "${table_file}.tmp" && mv "${table_file}.tmp" "$table_file"
+        echo "Row deleted from table '$table_name'."
+    else
+        echo "Table '$table_name' does not exist."
+    fi
+}
+
 # Main script logic
 while true; do
     if [ "$CONNECTED" = true ]; then
