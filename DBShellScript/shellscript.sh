@@ -188,6 +188,41 @@ delete_row() {
     fi
 }
 
+
+
+ Function to connect to a database
+connect_to_database() {
+    list_databases
+    read -p "Enter the name of the database to connect to: " db_name
+    if [ -z "$db_name" ]; then
+        echo "Database name cannot be empty."
+        return 1
+    fi
+
+    if [ -d "$db_name" ]; then
+        DB_DIR="$db_name"
+        CONNECTED=true
+        echo "Connected to database '$DB_DIR'."
+        echo "Current tables:"
+        list_tables
+    else
+        echo "Database '$db_name' does not exist."
+    fi
+}
+
+# Function to disconnect from the database
+disconnect_from_database() {
+    if [ "$CONNECTED" = true ]; then
+        CONNECTED=false
+        DB_DIR=""
+        echo "Disconnected from the database."
+    else
+        echo "No database is currently connected."
+    fi
+}
+
+
+
 # Main script logic
 while true; do
     if [ "$CONNECTED" = true ]; then
